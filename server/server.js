@@ -3,7 +3,7 @@ const app = express()
 const port = 4000
 
 
-var fs = require('fs');
+
 
 var multer = require('multer')
 var storage = multer.diskStorage(
@@ -33,6 +33,8 @@ app.post('/upload', upload.any(), function(req, res) {
 
 })
 
+const fs = require('fs');
+
 
 
 
@@ -43,6 +45,10 @@ app.get('/template_count', (req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
   res.setHeader('Access-Control-Allow-Credentials', true); // If needed
 
+
+  let rawdata = fs.readFileSync('../database/templates.json');
+  let templates = JSON.parse(rawdata);
+  console.log(templates);
 
   console.log(req.body)
 
