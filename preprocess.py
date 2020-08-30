@@ -52,7 +52,7 @@ if __name__ == '__main__':
     filename=str(args["input"])
     type=str(args["type"])
     if(type=='pdf'):
-        sample = convert_from_path(filename, dpi=400, grayscale=True,poppler_path=r"D:/poppler/bin")
+        sample = convert_from_path(filename, dpi=400, grayscale=True,poppler_path=r"./poppler-0.68.0_x86/poppler-0.68.0/bin")
         for i, curr_image in enumerate(sample):
             fname = 'sample_' + str(i) + '.png'
             curr_image.save(fname, "PNG")

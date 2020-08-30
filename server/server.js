@@ -47,16 +47,13 @@ app.get('/template_count', (req, res) => {
 
 
   let rawdata = fs.readFileSync('../database/templates.json');
-  let templates = JSON.parse(rawdata);
-  console.log(templates);
+  let templates_lis = JSON.parse(rawdata);
+  console.log(templates_lis);
 
   console.log(req.body)
 
   const reply = {
-    templates :  [
-      "hello1",
-      "hello2"
-    ]
+    templates :  templates_lis
   }
 
   res.send(reply)
