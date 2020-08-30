@@ -56,7 +56,11 @@ app.get('/template_count', (req, res) => {
     templates :  templates_lis
   }
 
-  res.send(reply)
+    res.send(reply)
+
+
+
+ 
 
 
 })
@@ -69,6 +73,28 @@ app.use(cors({origin: 'http://localhost:3000'}));
 
 
 
+
+
+
+
+
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
+
+  // var spawn = require("child_process").spawn; 
+      
+
+// var process = spawn('python3',["./preprocess.py", 
+//                         "-i./../Sample16.pdf", ] ); 
+
+// process.stdout.on('data', function(data) { 
+//     console.log(data.toString()); 
+// } ) 
+
+// process.stderr.on('data', (data) => {
+//   console.error(`stderr: ${data}`);
+// });
+
+
 })
