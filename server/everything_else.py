@@ -71,11 +71,17 @@ if __name__ == '__main__':
     for x in jsonData:
         parsedData.append([int(x['label']), [x['left'], x['top'], x['width'], x['height'] ]])
     print(parsedData)
+    lastX=0
+    lastY=0
+    lastW=0
+    lastH=0
 
     minYT = 1000000
     minXT = 1000000
     minYD = 1000000
     minXD = 1000000
+    maxXD=0
+    maxYD=0
     for row in parsedData:
         if row[1][1] < minYT:
             minYT = row[1][1]
@@ -85,6 +91,9 @@ if __name__ == '__main__':
         if row[1][1] < minYD:
             minYD = row[1][1]
             minXD = row[1][0]
+        if row[1][1]>maxYD:
+            maxYD=row[1][1]
+            maxXD=row[1][0]
 
     diffX = minXT - minXD
     diffY = minYT - minYD
@@ -92,6 +101,18 @@ if __name__ == '__main__':
     for row in parsedData:
         row[1][0] += diffX
         row[1][1] += diffY
+
+    for elem in parsedData:
+        if elem[0] == -1:
+            lastX = elem[1][0]
+            lastY = elem[1][1]
+            lastW = elem[1][2]
+            lastH = elem[1][3]
+
+    diff=maxYD-lastY
+    for elem in parsedData:
+        if int(elem[0])>=21:
+            elem[1][3]+=diff
 
     print(parsedData)
 
