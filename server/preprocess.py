@@ -72,4 +72,4 @@ if __name__ == '__main__':
     else:
         img = preprocess(filename)
 
-    cv2.imwrite(r"./../database/preprocessed/sample_0.png", img)
+    cv2.imwrite(r"./../web/invoice_template/src/preprocessed/sample_0.png", img)
