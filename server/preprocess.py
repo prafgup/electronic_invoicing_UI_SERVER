@@ -11,6 +11,7 @@ import sys
 import argparse
 import os
 
+
 def preprocess(path):
     # Read Image from Path
     image = cv2.imread(path)
@@ -40,26 +41,35 @@ def preprocess(path):
     final = cv2.adaptiveThreshold(denoised_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
     # Resizing Image to 1920*1080
     final = cv2.resize(final, (1080, 1920))
-    cv2.imshow("abcd",final)
-    cv2.imwrite(path, final)
+    # cv2.imshow("abcd",final)
+    # cv2.imwrite(path, final)
     print("sample_0.png")
-
+    return final
 
 
 if __name__ == '__main__':
-    parser=argparse.ArgumentParser()
+    parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--input', metavar='', required=True, help="File Path Here")
     args = vars(parser.parse_args())
-    filename=str(args["input"])
+    filename = str(args["input"])
 
-
+    img = None
+    first = True;
     if ".pdf" in filename:
-        sample = convert_from_path(filename, dpi=400, grayscale=True,poppler_path=r"./../poppler-0.68.0_x86/poppler-0.68.0/bin")
+        sample = convert_from_path(filename, dpi=400, grayscale=True,
+                                   poppler_path=r"./../poppler-0.68.0_x86/poppler-0.68.0/bin")
 
         for i, curr_image in enumerate(sample):
             fname = 'sample_' + str(i) + '.png'
             curr_image.save(fname, "PNG")
-            preprocess(fname)
-    else:
-        preprocess(filename)
+            processed_image = preprocess(fname)
+            if first:
+                img = processed_image
+                first = False
+            else:
+                cv2.vconcat([img,processed_image])
 
+    else:
+        img = preprocess(filename)
+
+    cv2.imwrite(r"./../database/preprocessed/sample_0.png", img)
