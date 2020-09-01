@@ -147,7 +147,7 @@ if __name__ == '__main__':
         if counter>0:
             av_accuracy/=counter
 
-        print(av_accuracy)
+        #print(av_accuracy)
         if av_accuracy<50 and av_accuracy!=0:
             cv2.rectangle(errorImage, (x-5, y-5), (x + w+5, y + h+5), (0, 255, 0), 2)
             errorPresent=True

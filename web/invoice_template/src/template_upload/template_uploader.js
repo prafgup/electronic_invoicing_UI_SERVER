@@ -17,7 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from "@material-ui/core/MenuItem"
 import Loader from 'react-loader-spinner'
 import { Link as ReactLink } from "react-router-dom";
-
+import {  useHistory } from "react-router-dom";
 
 import FormData from "form-data";
 import axios from "axios"
@@ -60,7 +60,7 @@ export default function TemplateUploader() {
   const [loading , setLoading] = useState(false)
   const [isdone , setIsDone] = useState(false)
 
-
+  let history = useHistory();
 
 
   const uploadHandler = ()=> {
@@ -99,6 +99,19 @@ export default function TemplateUploader() {
 
         console.log(response)
 
+        
+        if( response.data.includes("True")){
+          history.push({
+            pathname: '/errorview',
+            state: { name: selectedTemplate.trim() }
+          });
+        }
+        else{
+          history.push({
+            pathname: '/alldone',
+            state: { name: selectedTemplate.trim() }
+          });
+        }
 
         setLoading(false)
         setIsDone(true)
