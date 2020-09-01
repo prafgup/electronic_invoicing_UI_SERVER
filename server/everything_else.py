@@ -18,7 +18,7 @@ if __name__ == '__main__':
     sheetPath = str(args["worksheetPath"])
     # load the input image, convert it from BGR to RGB channel ordering,
     # and use Tesseract to localize each area of text in the input image
-    image = cv2.imread(filename)
+    image = cv2.imread(r'./../web/invoice_template/src/preprocessed/'+filename)
     rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     # tessdata_dir_config = '"--tessdata-dir "D:\Teserract-OCR\tesdata"'
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -65,11 +65,16 @@ if __name__ == '__main__':
 
     jsonData = ""
     # Read Data from json file here. Assuming a format of type data2= [[code,[x,y,w,h]],[code,[x,y,w,h]],....]
-    with open(jsonPath) as BOB:
+    with open(r'./../database/templates.json') as BOB:
         jsonData = json.load(BOB)
     parsedData = []
+
     for x in jsonData:
-        parsedData.append([int(x['label']), [x['left'], x['top'], x['width'], x['height'] ]])
+        if x['name']==jsonPath:
+            y=x['data_points']
+            print(y)
+            for elem in y:
+                parsedData.append([int(elem['cls']), [int(float(elem['x'])*1080), int(float(elem['y'])*1920), int(float(elem['w'])*1080), int(float(elem['h'])*1920) ]])
     print(parsedData)
     lastX=0
     lastY=0
@@ -116,7 +121,7 @@ if __name__ == '__main__':
 
     print(parsedData)
 
-    image = cv2.imread("sample_0.png")
+    image = cv2.imread(r'./../web/invoice_template/src/preprocessed/'+filename)
     # data2=[[1,[160,427,308,35]]]
     wb = load_workbook(filename="sheet.xlsx")
     ws = wb.active

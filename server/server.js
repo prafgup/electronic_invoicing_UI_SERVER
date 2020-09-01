@@ -54,7 +54,7 @@ app.post('/preprocess', function(req, res) {
 
   console.log(req.body)
 
-  var process = spawn('python3',["./preprocess.py", 
+  var process = spawn('python',["./preprocess.py", 
                           "-i./../database/public/uploads/"+req.body.fname ] ); 
 
   process.stdout.on('data', function(data) { 
