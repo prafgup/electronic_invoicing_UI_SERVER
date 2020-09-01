@@ -51,7 +51,6 @@ app.post('/preprocess', function(req, res) {
 
   var spawn = require("child_process").spawn; 
   
-
   console.log(req.body)
 
   var process = spawn('python',["./preprocess.py", 
@@ -69,8 +68,13 @@ app.post('/preprocess', function(req, res) {
 
             console.log(data.toString()); 
             res.send(data.toString());
+                      
+            var exec = require("child_process").exec; 
+            var process3 = exec("output_" + req.body.template + ".xlsx" );
 
             } )
+
+            
             
             process2.stderr.on('data', (data) => {
               res.send(null)
@@ -88,6 +92,9 @@ app.post('/preprocess', function(req, res) {
         res.send(null)
         console.error(`stderr: ${data}`);
       });
+
+
+      
 
 
 })
@@ -129,6 +136,9 @@ app.post('/newtemplate', function(req, res) {
 })
 
 app.get('/template_count', (req, res) => {
+
+
+
 
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
