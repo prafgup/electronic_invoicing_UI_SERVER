@@ -59,8 +59,8 @@ if __name__ == '__main__':
                         1.2, (0, 0, 255), 1)
 
     # show the output image
-    cv2.imshow("abcd",image)
-    cv2.waitKey(0)
+    #cv2.imshow("abcd",image)
+    #cv2.waitKey(0)
 
 
     jsonData = ""

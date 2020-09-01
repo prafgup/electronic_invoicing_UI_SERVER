@@ -43,7 +43,7 @@ def preprocess(path):
     final = cv2.resize(final, (1080, 1920))
     # cv2.imshow("abcd",final)
     # cv2.imwrite(path, final)
-    print("sample_0.png")
+    #print("sample_0.png")
     return final
 
 
@@ -53,8 +53,9 @@ if __name__ == '__main__':
     args = vars(parser.parse_args())
     filename = str(args["input"])
 
-    img = None
-    first = True;
+    image_names=[]
+    img=None
+    first = True
     if ".pdf" in filename:
         sample = convert_from_path(filename, dpi=400, grayscale=True,
                                    poppler_path=r"./../poppler-0.68.0_x86/poppler-0.68.0/bin")
@@ -63,12 +64,27 @@ if __name__ == '__main__':
             fname = 'sample_' + str(i) + '.png'
             curr_image.save(fname, "PNG")
             processed_image = preprocess(fname)
-            if first:
-                img = processed_image
-                first = False
-            else:
-                cv2.vconcat([img,processed_image])
+            image_names.append(fname)
 
+        images = []
+        max_width = 0  # find the max width of all the images
+        total_height = 0  # the total height of the images (vertical stacking)
+
+        for name in image_names:
+            # open all images and find their sizes
+            images.append(cv2.imread(name))
+            if images[-1].shape[1] > max_width:
+                max_width = images[-1].shape[1]
+            total_height += images[-1].shape[0]
+
+        # create a new array with a size large enough to contain all the images
+        img = np.zeros((total_height, max_width, 3), dtype=np.uint8)
+
+        current_y = 0  # keep track of where your current image was last placed in the y coordinate
+        for image in images:
+            # add an image to the final array and increment the y coordinate
+            img[current_y:image.shape[0] + current_y, :image.shape[1], :] = image
+            current_y += image.shape[0]
     else:
         img = preprocess(filename)
 
