@@ -64,6 +64,7 @@ if __name__ == '__main__':
             fname = 'sample_' + str(i) + '.png'
             curr_image.save(fname, "PNG")
             processed_image = preprocess(fname)
+            cv2.imwrite(fname,processed_image)
             image_names.append(fname)
 
         images = []
