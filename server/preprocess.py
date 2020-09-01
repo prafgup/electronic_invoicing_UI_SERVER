@@ -43,7 +43,6 @@ def preprocess(path):
     final = cv2.resize(final, (1080, 1920))
     # cv2.imshow("abcd",final)
     # cv2.imwrite(path, final)
-    #print("sample_0.png")
     return final
 
 
@@ -90,3 +89,5 @@ if __name__ == '__main__':
         img = preprocess(filename)
 
     cv2.imwrite(r"./../web/invoice_template/src/preprocessed/sample_0.png", img)
+
+    print("sample_0.png")

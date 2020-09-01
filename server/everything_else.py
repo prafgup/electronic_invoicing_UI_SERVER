@@ -42,12 +42,12 @@ if __name__ == '__main__':
         # filter out weak confidence text localizations
         if conf > 0:
             # display the confidence and text to our terminal
-            print("Confidence: {}".format(conf))
-            print("Text: {}".format(text))
+            #print("Confidence: {}".format(conf))
+            #print("Text: {}".format(text))
 
             temp = [text, [x - 5, y - 5, w + 5, h + 5], conf]
-            print(temp)
-            print("")
+            #print(temp)
+            #print("")
             if (len(text) > 2):
                 boxes.append(temp)
 
@@ -72,11 +72,11 @@ if __name__ == '__main__':
     for x in jsonData:
         if x['name'] == jsonPath:
             y = x['data_points']
-            print(y)
+            #print(y)
             for elem in y:
                 parsedData.append([int(elem['cls']), [int(float(elem['x']) * 1080), int(float(elem['y']) * 1920),
                                                       int(float(elem['w']) * 1080), int(float(elem['h']) * 1920)]])
-    print(parsedData)
+    #print(parsedData)
     lastX = 0
     lastY = 0
     lastW = 0
@@ -120,7 +120,7 @@ if __name__ == '__main__':
         if int(elem[0]) >= 21:
             elem[1][3] += diff
 
-    print(parsedData)
+    #print(parsedData)
 
     image = cv2.imread(r'./../web/invoice_template/src/preprocessed/'+filename)
     # data2=[[1,[160,427,308,35]]]
@@ -135,7 +135,7 @@ if __name__ == '__main__':
         # cv2_imshow(crop)
         crop_rgb = cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)
         text = pytesseract.image_to_string(crop_rgb, lang='eng', timeout=10)
-        print(text)
+        #print(text)
         text.encode("ascii", "ignore")
         text = "".join([c if ord(c) < 128 else "" for c in text]).strip()
         text = str(text)
@@ -208,4 +208,7 @@ if __name__ == '__main__':
             for i in range(len(lines)):
                 ws.cell(row=18 + i, column=2 + code - 21).value = str(lines[i]).encode('ascii', errors='ignore')
     wb.save(sheetPath)
+    print("done")
     wb.close()
+    
+    

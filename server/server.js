@@ -57,15 +57,37 @@ app.post('/preprocess', function(req, res) {
   var process = spawn('python',["./preprocess.py", 
                           "-i./../database/public/uploads/"+req.body.fname ] ); 
 
-  process.stdout.on('data', function(data) { 
-    res.send(data.toString())
-    console.log(data.toString()); 
-  } ) 
+        process.stdout.on('data', function(data) {
 
-  process.stderr.on('data', (data) => {
-    res.send(null)
-    console.error(`stderr: ${data}`);
-  });
+          console.log(data.toString()); 
+          if(req.body.newtemp == false && req.body.template){
+
+            var process2 = spawn('python',["./everything_else.py", 
+            "-i", "sample_0.png" , "-j" , req.body.template , "-w" , "./output_" + req.body.template + ".xlsx" ] ); 
+
+            process2.stdout.on('data', function(data) { 
+
+            console.log(data.toString()); 
+            res.send(data.toString());
+
+            } )
+            
+            process2.stderr.on('data', (data) => {
+              res.send(null)
+              console.error(`stderr: ${data}`);
+            });
+
+
+          }
+          else{
+            res.send(data.toString());
+          }
+        } ) 
+
+      process.stderr.on('data', (data) => {
+        res.send(null)
+        console.error(`stderr: ${data}`);
+      });
 
 
 })

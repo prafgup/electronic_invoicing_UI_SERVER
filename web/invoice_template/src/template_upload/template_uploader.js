@@ -69,7 +69,7 @@ export default function TemplateUploader() {
     console.log("uploading" , selectedFile);
 
 
-    if(selectedFile == null || selectedTemplate == null) return;
+    if(selectedFile == null || selectedTemplate == null && selectedTemplate!=0) return;
 
 
     setLoading(true);
