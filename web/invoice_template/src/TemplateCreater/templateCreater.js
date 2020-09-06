@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 
 import FormData from "form-data";
 import axios from "axios"
-
+import {  useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   spinner:{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" },
@@ -39,7 +39,7 @@ const TemplateCreater = () => {
  
  )
 
-
+ let history = useHistory();
  const uploadHandler = (regions_select)=> {
 
   axios.post("http://localhost:4000/newtemplate", {
@@ -50,10 +50,9 @@ const TemplateCreater = () => {
     .then((response) => {
 
       console.log(response)
-      // history.push({
-      //     pathname: '/newtemplate',
-      //     state: { name: selectedTemplate }
-      // });
+      history.push({
+          pathname: '/templateuploader',
+      });
 
 
     }).catch((error) => {

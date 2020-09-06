@@ -12,7 +12,6 @@ import AllDone from "./template_upload/alldone";
 
   return (
   <Router >
-
     <Route exact path="/" component={SignInSide} /> 
     <Route exact path="/newtemplate" component={TemplateCreater} />
     <Route exact path="/templateuploader" component={TemplateUploader} />

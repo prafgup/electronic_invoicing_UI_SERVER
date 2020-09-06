@@ -69,14 +69,18 @@ if __name__ == '__main__':
         jsonData = json.load(BOB)
     parsedData = []
 
+    hhw = 1080
+    hhh  =1920
+
+
     for x in jsonData:
         if x['name'] == jsonPath:
             y = x['data_points']
             # print(y)
             for elem in y:
-                parsedData.append([int(elem['cls']), [int(float(elem['x']) * 1080), int(float(elem['y']) * 1920),
-                                                      int(float(elem['w']) * 1080), int(float(elem['h']) * 1920)]])
-    # print(parsedData)
+                parsedData.append([int(elem['cls']), [int(float(elem['x']) * hhw), int(float(elem['y']) * hhh),
+                                                      int(float(elem['w']) * hhw), int(float(elem['h']) * hhh)]])
+    #print(parsedData)
     lastX = 1000
     lastY = 1900
     lastW = 0
@@ -115,12 +119,13 @@ if __name__ == '__main__':
             lastW = elem[1][2]
             lastH = elem[1][3]
 
-    diff = maxYD - lastY
+    diff =  (lastY - maxYD )*-1
+
     for elem in parsedData:
         if int(elem[0]) >= 21:
             elem[1][3] += diff
-
-    # print(parsedData)
+    #print(lastY , maxYD )
+    #print(parsedData)
 
     image = cv2.imread(r'./../web/invoice_template/src/preprocessed/' + filename)
     errorImage = image
